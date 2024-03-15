@@ -1,9 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-import SwiftUI
-import UniformTypeIdentifiers
-
 struct ContentView: View {
     
     @State var isShow = false
@@ -26,9 +23,13 @@ struct ContentView: View {
                 
                 let jsonString = try? String(contentsOf: url)
                 guard let jsonString else { return }
+                print(jsonString)
                 
                 let jsonData = try? Data(contentsOf: url)
                 guard let jsonData else { return }
+                let json = try? JSONSerialization.jsonObject(with: jsonData)
+                guard let json else { return }
+                print(json)
             }
         )
     }
