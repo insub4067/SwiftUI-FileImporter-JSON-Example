@@ -6,7 +6,7 @@ struct ContentView: View {
     @State var isShow = false
 
     var body: some View {
-        Button("Button") {
+        Button("Import JSON") {
             self.isShow = true
         }
         .fileImporter(
@@ -20,16 +20,15 @@ struct ContentView: View {
                 else { return }
                 
                 defer { url.stopAccessingSecurityScopedResource() }
-                
-                let jsonString = try? String(contentsOf: url)
-                guard let jsonString else { return }
-                print(jsonString)
-                
-                let jsonData = try? Data(contentsOf: url)
-                guard let jsonData else { return }
-                let json = try? JSONSerialization.jsonObject(with: jsonData)
-                guard let json else { return }
-                print(json)
+
+                if let jsonData = try? Data(contentsOf: url),
+                   let json = try? JSONSerialization.jsonObject(with: jsonData) {
+                    print(json)
+                }
+
+                if let jsonString = try? String(contentsOf: url) {
+                    print(jsonString)
+                }
             }
         )
     }
